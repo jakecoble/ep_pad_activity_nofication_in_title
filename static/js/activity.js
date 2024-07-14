@@ -8,9 +8,18 @@ exports.postAceInit = (hook, context) => {
   }, 'hovering', true);
 };
 
+function getDocument() {
+  try {
+    return parent.parent.document
+  } catch (e) {
+    console.warn(e)
+    return null
+  }
+}
 
 exports.aceEditEvent = (hookName, args) => {
-  const padTitle = parent.parent.document.title;
+  const doc = getDocument();
+  const padTitle = doc.title;
 
   const caretMoving = (args.callstack.type === 'applyChangesToBase');
   if (!caretMoving) return false;
@@ -28,9 +37,9 @@ exports.aceEditEvent = (hookName, args) => {
 };
 
 exports.userActive = () => {
-  const padTitle = parent.parent.document.title;
+  const doc = getDocument();
+  const padTitle = doc.title;
   if (padTitle[0] === '*') {
-    parent.parent.document.title = parent.parent.document.title.substring(
-        1, parent.parent.document.title.length);
+    doc.title = doc.title.substring(1, doc.title.length);
   }
 };
