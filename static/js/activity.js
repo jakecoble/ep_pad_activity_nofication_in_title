@@ -19,6 +19,8 @@ function getDocument() {
 
 exports.aceEditEvent = (hookName, args) => {
   const doc = getDocument();
+  if (!doc) return false;
+
   const padTitle = doc.title;
 
   const caretMoving = (args.callstack.type === 'applyChangesToBase');
@@ -32,12 +34,14 @@ exports.aceEditEvent = (hookName, args) => {
       prevTitle = padTitle;
     }
     const newTitle = `* ${prevTitle}`;
-    parent.parent.document.title = newTitle;
+    doc.title = newTitle;
   }
 };
 
 exports.userActive = () => {
   const doc = getDocument();
+  if (!doc) return false;
+
   const padTitle = doc.title;
   if (padTitle[0] === '*') {
     doc.title = doc.title.substring(1, doc.title.length);
