@@ -19,7 +19,7 @@ function getDocument() {
 
 exports.aceEditEvent = (hookName, args) => {
   const doc = getDocument();
-  if (!doc) return false;
+  if (!doc) return;
 
   const padTitle = doc.title;
 
@@ -40,7 +40,7 @@ exports.aceEditEvent = (hookName, args) => {
 
 exports.userActive = () => {
   const doc = getDocument();
-  if (!doc) return false;
+  if (!doc) return;
 
   const padTitle = doc.title;
   if (padTitle[0] === '*') {
